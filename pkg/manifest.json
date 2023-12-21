@@ -2,7 +2,7 @@
     {
         "process_name": "testing",
         "process_wasm_path": "/testing.wasm",
-        "on_panic": "Restart",
+        "on_exit": "Restart",
         "request_networking": true,
         "request_messaging": [
             "net:sys:uqbar"
