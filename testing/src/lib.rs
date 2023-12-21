@@ -291,12 +291,27 @@ impl Guest for Component {
         let mut channel_id = 0;
 
         // Bind HTTP path /messages
-        bind_http_path("/messages", true, false).unwrap();
+        match bind_http_path("/messages", true, false) {
+            Ok(_) => {}
+            Err(e) => {
+                print_to_terminal(0, format!("testing: http: {:?}", e,).as_str());
+            }
+        }
         // Bind WebSocket path for push updates
-        bind_ws_path("/", true, false).unwrap();
+        match bind_ws_path("/", true, false) {
+            Ok(_) => {}
+            Err(e) => {
+                print_to_terminal(0, format!("testing: ws: {:?}", e,).as_str());
+            }
+        }
 
         // If you have limited asset files, use serve_ui
-        serve_ui(&our, "ui").unwrap();
+        match serve_ui(&our, "ui") {
+            Ok(_) => {}
+            Err(e) => {
+                print_to_terminal(0, format!("testing: ui: {:?}", e,).as_str());
+            }
+        }
 
         // If you have asset files > 100 MB or so, use serve_index_html and bind_http_path, and then handle_ui_asset_request in your request handler
         // Note that the bound path (like "/assets/*") must be the same as the path that the assets are referenced from in the index.html file
